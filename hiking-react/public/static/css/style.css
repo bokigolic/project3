@@ -1,0 +1,87 @@
+* {
+  box-sizing: border-box;
+  /* transition: all 0.2s ease; */ /* ease is between ease-out and ease-in-out */
+}
+
+html {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5; /* default mozila line-height is 1.435 */
+  color: #303030; /* rgba(48,48,48,1); */
+}
+
+body {
+  /* body overwrite html */
+  margin: 0px;
+  padding: 0px;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+* html .clearfix {
+  zoom: 1;
+}
+
+/**/
+
+p {
+  margin: 0.5em 0px;
+}
+
+h1 {
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+h2 {
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+}
+h3 {
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+}
+h4 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+h5 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.indent {
+  padding-left: 3em; /* 3em je sirine kao nnnnn */
+}
+
+/* -----Bootstrap 4 spinner https://getbootstrap.com/docs/4.2/components/spinners/ */
+
+.spinner-border {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  vertical-align: text-bottom;
+  border: 6px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
+.spinner-border-sm {
+  width: 18px;
+  height: 18px;
+  border-width: 4px;
+}
+@keyframes spinner-border {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
