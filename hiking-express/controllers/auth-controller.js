@@ -1,3 +1,4 @@
+const config = require('../utils/config.js');
 const User = require('../models/user-model.js');
 const AuthSession = require('../models/auth-session-model.js');
 const jwt = require('jsonwebtoken');
@@ -11,6 +12,11 @@ const createToken = (id) => {
   return jwt.sign({ id }, JWT_SECRET);
 };
 
+const decodeToken = (token) => {
+  const decoded = jwt.verify(token, JWT_SECRET);
+  return decoded.id;
+};
+
 
 // CONTROLLERS
 
@@ -19,26 +25,26 @@ exports.registerController = async (req, res, next) => {
   console.log('req.body');
   console.log(req.body);
   console.log(req.body.formData);
-  /*
-  const newUser = await User.create({
-    username: req.body.username,
-    password: req.body.password,
-    activated: true
-  });
-  */
   try {
+    let error = false;
+    let error_type = '';
     console.log('test');
+
+    // STEP Mongoose model User make changes in MongoDB
     const newUser = await User.create({
-      ...req.body.formData,
+      username: req.body.formData.username,
+      password: req.body.formData.password,
       activated: true
     });
     console.log(newUser);
     const token = createToken(newUser._id);
     console.log('test11');
+    /*
     const cookieOptions = {
       expires: new Date(Date.now() + JWT_COOKIE_EXPIRES),
     };
     res.cookie('jwt', token, cookieOptions);
+    */
     console.log('test2');
     response = res_utils.prepare_success_response({
       payload: {
@@ -64,11 +70,43 @@ exports.registerController = async (req, res, next) => {
 
 
 exports.logoutController = async (req, res, next) => {
+  console.log('--- logoutController');
   let response;
   try {
-    // const _response = await;
-    response = res_utils.prepare_success_response(_response);
-    res.status(200).json(response);
+    let error = false;
+    let error_type = '';
+    console.log('test1');
+    const TOKEN_HEADER_KEY = config.TOKEN_HEADER_KEY;
+    const token = req.headers[TOKEN_HEADER_KEY];
+    console.log('token', token);
+    const user_id = decodeToken(token);
+    console.log('user id from decoding token', user_id);
+    if (user_id) {
+
+      // STEP Mongoose model AuthSession make changes in MongoDB
+      const results = await AuthSession.deleteMany({
+        user_id: user_id
+      });
+      console.log(results);
+      // now its time for frontend to delete token
+      const response = res_utils.prepare_success_response({
+        payload: {
+          message: 'succesfuly logged out from backend'
+        }
+      });
+      res.status(200).json(response);
+    } else {
+      error = true;
+      error_type = 'user id not extracted from jwt token';
+    }
+
+    if (error === true) {
+      response = res_utils.prepare_error_response({
+        error_type: error_type
+      });
+      res.status(500).json(response);
+    }
+
   } catch (err) {
     response = 'errorrrr';
     response = res_utils.prepare_error_response({
@@ -76,6 +114,8 @@ exports.logoutController = async (req, res, next) => {
     });
     res.status(500).json(response);
   }
+
+  // await Character.deleteMany({ name: /Stark/, age: { $gte: 18 } });
 };
 
 
@@ -83,13 +123,19 @@ exports.formLoginController = async (req, res, next) => {
   console.log('formLoginController');
   console.log(req.body.formData);
   try {
+    let error = false;
+    let error_type = '';
     const { username, password } = req.body.formData;
     console.log(username, password);
     console.log(username && password);
     if (username && password) {
+
+      // STEP Mongoose model User reading from MongoDB
       const user = await User.findOne({ username, password });
       if (user && user._id) {
         const token = createToken(user._id);
+
+        // STEP Mongoose model AuthSession make changes in MongoDB
         const sessionSuccess = await AuthSession.create({
           user_id: user._id,
           token
@@ -108,17 +154,12 @@ exports.formLoginController = async (req, res, next) => {
           });
           res.status(200).json(response);
         } else {
-          response = res_utils.prepare_error_response({
-            error_type: 'auth session creation fail'
-          });
-          res.status(500).json(response);
+          error = true;
+          error_type = 'auth session creation fail';
         }
       } else {
-        console.log('incorect email or pass');
-        response = res_utils.prepare_error_response({
-          error_type: 'incorect email or pass'
-        });
-        res.status(500).json(response);
+        error = true;
+        error_type = 'incorect email or pass';
       }
     } else {
       console.log('incorect email or pass');
@@ -127,6 +168,14 @@ exports.formLoginController = async (req, res, next) => {
       });
       res.status(500).json(response);
     }
+
+    if (error === true) {
+      response = res_utils.prepare_error_response({
+        error_type: error_type
+      });
+      res.status(500).json(response);
+    }
+
   } catch (err) {
     response = 'errorrrr';
     response = res_utils.prepare_error_response({

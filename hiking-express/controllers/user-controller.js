@@ -13,12 +13,15 @@ exports.getMyUserData = async (req, res, next) => {
   console.log('req.headers');
   console.log(req.headers);
   try {
+    let error = false;
+    let error_type = '';
     // STEP get token from http headers
     const TOKEN_HEADER_KEY = config.TOKEN_HEADER_KEY;
     const token = req.headers[TOKEN_HEADER_KEY];
     console.log('token', token);
 
     // STEP find that token in loggedin sessions
+    // STEP Mongoose model AuthSession reading from MongoDB
     const session = await AuthSession.findOne({ token });
     console.log('session');
     console.log(session);
@@ -29,6 +32,8 @@ exports.getMyUserData = async (req, res, next) => {
       console.log(user_id);
       if (user_id) {
         console.log(user_id);
+
+        // STEP Mongoose model User reading from MongoDB
         // const user = await User.findOne({ _id: user_id });
         const user = await User.findById(user_id);
         console.log('user found');
@@ -38,28 +43,30 @@ exports.getMyUserData = async (req, res, next) => {
             readme: 'this is response payload getMyUserData controller',
             token: token,
             user: {
+              _id: user_id,
               username: user.username,
               activated: user.activated
             }
           }
         });
         res.status(200).json(response);
-
       } else {
-        response = res_utils.prepare_error_response({
-          error_type: 'user not found'
-        });
-        res.status(500).json(response);
+        error = true;
+        error_type = 'user not found';
       }
     } else {
+      error = true;
+      error_type = 'auth session not found';
+    }
+
+    if (error === true) {
       response = res_utils.prepare_error_response({
-        error_type: 'auth session not found'
+        error_type: error_type
       });
       res.status(500).json(response);
     }
 
   } catch (err) {
-    response = 'errorrrr';
     response = res_utils.prepare_error_response({
       error_type: 'CATCH_ERROR_INSIDE_CIONTROLLER getMyUserData'
     });
