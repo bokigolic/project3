@@ -28,7 +28,8 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         route: action.payload,
-        routeFreshness: counter
+        routeFreshness: counter,
+        drawerOpened: false
       };
 
     case 'DRAWER_OPEN':

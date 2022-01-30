@@ -84,4 +84,11 @@ ajax.getAuthMyUserData = async () => {
   return response;
 };
 
+ajax.postTourCreate = async (formData) => {
+  // real backend
+  let data_prepared = convert_to_json({ formData }); // ENCODE...
+  let response = await ajax_fetch.postmethod_send(apiLib.postTourCreate(), data_prepared);
+  return response;
+};
+
 export default ajax;

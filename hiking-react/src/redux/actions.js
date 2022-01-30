@@ -14,6 +14,9 @@ const AUTH_FORMLOGIN_SUCCESS = 'AUTH_FORMLOGIN_SUCCESS';
 const AUTH_FORMLOGIN_FAIL = 'AUTH_FORMLOGIN_FAIL';
 const AUTH_GET_MY_USER_DATA_FETCHING = 'AUTH_GET_MY_USER_DATA_FETCHING';
 const AUTH_GET_MY_USER_DATA_SUCCESS = 'AUTH_GET_MY_USER_DATA_SUCCESS';
+const TOUR_CREATE_FETCHING = 'TOUR_CREATE_FETCHING';
+const TOUR_CREATE_SUCCESS = 'TOUR_CREATE_SUCCESS';
+const TOUR_CREATE_FAIL = 'TOUR_CREATE_FAIL';
 
 
 const errCatched = (error) => {
@@ -241,3 +244,45 @@ export const actionAuthGetMyUserData = () => {
   };
 };
 
+
+// TOUR ACTIONS
+
+export const actionTourCreate = (entbox) => {
+  // THUNK
+  return (dispatch) => {
+    // korak 1 - dispetchujemo akciju uz prikaz spinera
+    dispatch({
+      type: TOUR_CREATE_FETCHING
+    });
+
+    // korak 2 - fetchujemo podatke
+    ajax.postTourCreate(entbox)
+      .then(response => {
+        console.log(response);
+        return response;
+      })
+      .then(response => ajax_fetch.response_json_smart(response))
+      .then((response) => {
+        // korak 3 - zavrseno fetcovanje
+        // if (response.success === true) {
+        console.log(response);
+        if (response && response.is_success_response === true) {
+          // console.log(response);
+          const res_payload = response.payload;
+          console.log(res_payload);
+          dispatch({
+            type: TOUR_CREATE_SUCCESS,
+            payload: res_payload
+          });
+
+
+          //
+        } else {
+          dispatch({ type: TOUR_CREATE_FAIL });
+          console.log(response);
+        }
+      })
+      .catch(errCatched)
+
+  }
+};
