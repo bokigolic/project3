@@ -4,18 +4,10 @@ import Website from "./Website";
 
 const App = () => {
   useEffect(() => {
-    // when App mount
-
-    // INIT
+    // INITIALIZING SCRIPTS
     init()
-      .then(() => {
-        /*
-        // after succesful initialization
-        
-        */
-      })
+  }, []);
 
-  });
   return (
     <div className="App" >
       <Website />

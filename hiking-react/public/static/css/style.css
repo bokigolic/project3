@@ -1,20 +1,25 @@
 * {
   box-sizing: border-box;
-  /* transition: all 0.2s ease; */ /* ease is between ease-out and ease-in-out */
+  transition: all 0.2s ease;
+  /* ease is between ease-out and ease-in-out */
 }
 
 html {
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5; /* default mozila line-height is 1.435 */
-  color: #303030; /* rgba(48,48,48,1); */
+  line-height: 1.4;
+  /* default browser line-height je oko 1.4 */
+  color: #282828;
+  /* rgba(40,40,40,1); */
 }
 
 body {
-  /* body overwrite html */
   margin: 0px;
   padding: 0px;
+  text-align: left;
+  background-color: white;
+  /* color: #282c34; */
 }
 
 .clearfix:after {
@@ -29,8 +34,6 @@ body {
 * html .clearfix {
   zoom: 1;
 }
-
-/**/
 
 p {
   margin: 0.5em 0px;
@@ -55,6 +58,18 @@ h4 {
 h5 {
   margin-top: 1em;
   margin-bottom: 0.5em;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 .indent {
@@ -84,4 +99,292 @@ h5 {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+.text-secondary {
+  color: #6c757d !important;
+}
+.spinner-border.text-secondary {
+  color: #6c757d !important;
+}
+
+/* SPINNER DOTS */
+.spinner-dots-group-inline {
+  display: inline;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+/**
+ * ==============================================
+ * Dot Elastic
+ * ==============================================
+ */
+.dot-elastic {
+  display: inline-block;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c75300;
+  background-color: rgb(128, 128, 128);
+  color: #c75300;
+  color: rgb(128, 128, 128);
+  animation: dotElastic 1s infinite linear;
+}
+
+.dot-elastic::before,
+.dot-elastic::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-elastic::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c75300;
+  background-color: rgb(128, 128, 128);
+  color: #c75300;
+  color: rgb(128, 128, 128);
+  animation: dotElasticBefore 1s infinite linear;
+}
+
+.dot-elastic::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c75300;
+  background-color: rgb(128, 128, 128);
+  color: #c75300;
+  color: rgb(128, 128, 128);
+  animation: dotElasticAfter 1s infinite linear;
+}
+
+@keyframes dotElasticBefore {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1.5);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes dotElastic {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 1.5);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes dotElasticAfter {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+/* uni */
+.uni-content-item {
+  margin: 15px;
+  padding: 10px;
+  border: 2px solid silver;
+  border-radius: 4px;
+}
+
+.uni-content-obj {
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid rgb(32, 56, 160);
+  border-radius: 4px;
+}
+.uni-content-obj > .uni-content-obj-item {
+}
+
+.uni-content-arr {
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid rgb(202, 78, 78);
+  border-radius: 4px;
+}
+.uni-content-arr > .uni-content-arr-item {
+  border-bottom: 1px solid silver;
+  margin-bottom: 3px;
+}
+
+ul.array-of-strings li {
+  margin-bottom: 0.2rem;
+}
+
+/**/
+
+.widget-collapsible {
+  position: relative;
+}
+.widget-collapsible {
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+.widget-collapsible > .triangle {
+  z-index: 999;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 3rem;
+  width: 2rem;
+  line-height: 3rem;
+  text-align: center;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.widget-collapsible.opened > .triangle {
+  transform: rotate(90deg);
+  color: tomato;
+}
+
+.widget-collapsible > .widget-collapsible-header {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+  line-height: 3rem;
+  padding-left: 2rem;
+  border-radius: 0.4rem;
+  background: tomato;
+  color: white;
+  font-weight: normal;
+}
+.widget-collapsible-header:hover {
+  cursor: pointer;
+  border-color: black;
+}
+.widget-collapsible.opened > .widget-collapsible-header {
+  background-color: white;
+  color: unset;
+}
+.widget-collapsible-header h2 {
+  margin: 0px;
+}
+.widget-collapsible-header h3 {
+  margin: 0px;
+}
+
+.widget-collapsible > .widget-collapsible-body {
+  overflow: hidden;
+  max-height: 0px;
+}
+.widget-collapsible.closed > .widget-collapsible-body {
+  overflow: hidden;
+  max-height: 0px;
+  animation-name: widget-collapsible-animation-close;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+}
+.widget-collapsible.opened > .widget-collapsible-body {
+  max-height: unset;
+  padding-bottom: 1rem;
+  animation-name: widget-collapsible-animation-open;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+}
+
+@keyframes widget-collapsible-animation-open {
+  0% {
+    max-height: 0px;
+  }
+  99% {
+    max-height: 2000px;
+  }
+  100% {
+    max-height: unset;
+  }
+}
+@keyframes widget-collapsible-animation-close {
+  0% {
+    max-height: 2000px;
+  }
+  100% {
+    max-height: 0px;
+  }
+}
+
+/* ARTICLES */
+.article h3 {
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+.article-date {
+  margin: 0.2em 0px;
+  font-size: 0.8em;
+  color: darkslategrey;
+}
+.article-course-id {
+  margin: 0.2em;
+  font-weight: 600;
+}
+.article-body.description {
+  /* max-width: 40rem; */
+}
+
+.avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 3rem;
+  background-color: white;
+  overflow: hidden;
+}
+.avatar img {
+  display: block;
+  width: auto;
+  height: 3rem;
+  margin: auto;
+}
+
+p.quote {
+  margin-left: 2rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-style: italic;
+  font-weight: 600;
+}
+p.quote b {
+  margin-left: 2em;
+  font-style: italic;
+  font-weight: 600;
 }
