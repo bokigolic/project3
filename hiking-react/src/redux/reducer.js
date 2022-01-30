@@ -1,11 +1,22 @@
+import { dummyReviews, dummyTours } from "../utils/dummy-data";
 
 let counter = 0;
 
 const initialState = {
-  dev_mode: false,
-  drawer_opened: false,
-  route_key: 'about',
-  route_freshness: 0,
+  route: 'HOME',
+  routeFreshness: 0,
+  drawerOpened: false,
+  isLoggedIn: false,
+  myUserId: null,
+  myUserName: '',
+  toursData: {
+    data: dummyTours,
+    fetching: false
+  },
+  reviewsData: {
+    data: dummyReviews,
+    fetching: false
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -16,48 +27,48 @@ const rootReducer = (state = initialState, action) => {
       counter++
       return {
         ...state,
-        route_key: action.payload,
-        route_freshness: counter,
-        drawer_opened: false
+        route: action.payload,
+        routeFreshness: counter
       };
 
     case 'DRAWER_OPEN':
       return {
         ...state,
-        drawer_opened: true
+        drawerOpened: true
       };
 
     case 'DRAWER_CLOSE':
       return {
         ...state,
-        drawer_opened: false
+        drawerOpened: false
       };
 
-    case 'DRAWER_TOGGLE':
-      if (state.drawer_opened) {
-        return {
-          ...state,
-          drawer_opened: false
-        };
-      } else {
-        return {
-          ...state,
-          drawer_opened: true
-        };
-      }
+    case 'AUTH_LOGOUT':
+      counter++
+      return {
+        ...state,
+        isLoggedIn: false,
+        myUserName: '',
+        myUserId: null,
+        route: 'HOME',
+        routeFreshness: counter,
+      };
 
-    case 'DEV_MODE_TOGGLE':
-      if (state.dev_mode) {
-        return {
-          ...state,
-          dev_mode: false
-        };
-      } else {
-        return {
-          ...state,
-          dev_mode: true
-        };
-      }
+    case 'AUTH_FORMLOGIN_SUCCESS':
+      counter++
+      return {
+        ...state,
+        route: 'HOME',
+        routeFreshness: counter,
+      };
+
+    case 'AUTH_GET_MY_USER_DATA_SUCCESS':
+      return {
+        ...state,
+        isLoggedIn: true,
+        myUserName: action.payload.user.username,
+        myUserId: action.payload.user._id,
+      };
 
     default:
       return state

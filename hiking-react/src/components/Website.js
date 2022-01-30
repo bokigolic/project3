@@ -1,78 +1,47 @@
-import { connect } from "react-redux";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
-import UniversalContentAjax from "./UniversalContentAjax";
-import Footer from "./Footer";
-import PageDev from "./PageDev";
-import Drawer from "./Drawer";
-import { actionDrawerToggle } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { actionAuthLogout, actionAuthGetMyUserData, actionDrawerOpen } from "../redux/actions";
+import PageRouter from "./PageRouter";
+import FormLogin from "./FormLogin";
+import FormRegister from "./FormRegister";
+import FormReview from "./FormReview";
+import FormTour from "./FormTour";
+import Drawer from "./DrawerCustom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-// displaying layoutof website
 
 const Website = (props) => {
-  const dispatch = props.dispatch;
-  // const dispatch = props.dispatch;
-  const route_key = props.route_key;
+  const dispatch = useDispatch();
+  const drawerOpened = useSelector(state => state.drawerOpened);
+  const isLoggedIn = useSelector(state => state.isLoggedIn);
+  const myUserName = useSelector(state => state.myUserName);
 
-  let jsxBody = null;
-  if (route_key === 'DEV') {
-    jsxBody = (
-      <PageDev />
-    );
-  } else {
-    const apikey = route_key;
-    jsxBody = (
-      <UniversalContentAjax key={apikey} apikey={apikey} freshness={props.route_freshness} />
+  let jsxUserMessage = null;
+  if (isLoggedIn && myUserName) {
+    jsxUserMessage = (
+      <div>You are logged in! Username: <b>{myUserName}</b></div>
     );
   }
 
-  let cl_dev_mode = '';
-  if (props.dev_mode === true) {
-    cl_dev_mode = ' dev-mode';
-  }
-
-  let cl_drawer = '';
-  if (props.drawer_opened === true) {
-    cl_drawer = ' drawer-opened';
-  }
-
-  const _click_hamburger = () => {
-    dispatch(actionDrawerToggle());
+  const handleClickHamburger = () => {
+    dispatch(actionDrawerOpen());
   };
 
   return (
     <>
-      <div className={"wrapper " + cl_dev_mode + cl_drawer}>
+      <div className={"wrapper" + (drawerOpened ? " drawer-opened" : "")}>
         <Drawer />
-        <header className="header">
-          <div className="fix-drawer-push"></div>
-          <div className="menu-icon" onClick={_click_hamburger}><FontAwesomeIcon icon={faBars} /></div>
-          <div className="logo-title">iSchool React App</div>
-          <div className="flex-1"></div>
+        <header>
+          <div className="menu-icon" onClick={handleClickHamburger}><FontAwesomeIcon icon={faBars} /></div>
+          <div className="logo">American Hiking Club</div>
         </header>
-        <div className="main">
-          <div className="fix-header-push"></div>
-          <div className="centering-widget">
-            <div className="flex-1"></div>
-            <div className="main-content">
-              {jsxBody}
-            </div>
-            <div className="flex-1"></div>
-          </div>
+        <div className="page-body">
+          {jsxUserMessage}
+          <PageRouter />
         </div>
-        <Footer />
-        <a href="#" className="btn-scroll-to-top"><FontAwesomeIcon icon={faAngleDoubleUp} /></a>
       </div>
     </>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    route_key: state.route_key,
-    route_freshness: state.route_freshness,
-    drawer_opened: state.drawer_opened,
-    dev_mode: state.dev_mode
-  };
-}
-export default connect(mapStateToProps)(Website);
+export default Website;

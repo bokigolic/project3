@@ -6,11 +6,12 @@ const NavOption = (props) => {
 
   return (
     <div
-      className={"option" + clActive}
+      className={"option" + (clActive)}
       onClick={props.handleClick}
     >
       <div className="bg"><span className="title">{props.title}</span></div>
     </div>
   )
-}
+};
+
 export default NavOption;
