@@ -11,8 +11,8 @@ const FormRegister = (props) => {
   const dispatch = useDispatch();
 
   const preset = {
-    username: 'Abc',
-    password: 123465
+    username: '',
+    password: ''
   };
 
   const [state, handleChange, setState] = useHandleInputChange(preset);

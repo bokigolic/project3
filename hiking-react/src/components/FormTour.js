@@ -1,5 +1,7 @@
-import { Box, Button, Container, createTheme, CssBaseline, FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useHandleInputChange } from "../hooks/useHandleInputChange";
+import { actionTourCreate } from "../redux/actions";
+import { Box, Button, Container, createTheme, CssBaseline, FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import DateAdapter from '@mui/lab/AdapterDateFns'; // date-fns
 import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
@@ -8,6 +10,7 @@ import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 const theme = createTheme();
 
 const FormTour = (props) => {
+  const dispatch = useDispatch();
 
   const preset = {
     name: 'Tour name',
@@ -28,9 +31,27 @@ const FormTour = (props) => {
     });
   };
 
+  const validator = (state) => {
+    let test = true;
+
+    if (!state.name || typeof state.name !== 'string' || state.name.length < 4) {
+      test = false;
+    }
+    if (!state.description || typeof state.description !== 'string' || state.description === '') {
+      test = false;
+    }
+
+    return test;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handle submit')
+    console.log('handle submit');
+    if (validator(state)) {
+      // validated
+      console.log('handle submit validated');
+      dispatch(actionTourCreate(state));
+    }
   };
 
 

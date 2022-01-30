@@ -1,8 +1,9 @@
 
 
-export const dummy_tours = [
+export const dummyTours = [
   {
     _id: 1,
+    user_created: 1,
     name: 'Alaska tour',
     description: 'Nice tour',
     date: '11/30/2021',
@@ -12,6 +13,7 @@ export const dummy_tours = [
   },
   {
     _id: 2,
+    user_created: 1,
     name: 'Colorado tour',
     description: 'Beautiful',
     date: '02/25/2021',
@@ -21,6 +23,7 @@ export const dummy_tours = [
   },
   {
     _id: 3,
+    user_created: 1,
     name: 'Florida tour',
     description: 'Nice',
     date: '05/30/2022',
@@ -30,6 +33,7 @@ export const dummy_tours = [
   },
   {
     _id: 4,
+    user_created: 1,
     name: 'Yellowstone tour',
     description: 'Good as much as Colorado tour',
     date: '06/30/2022',
@@ -40,7 +44,7 @@ export const dummy_tours = [
 ];
 
 
-export const dummy_reviews = [
+export const dummyReviews = [
   {
     user: 1,
     tour: 1,

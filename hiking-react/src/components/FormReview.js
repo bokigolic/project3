@@ -9,7 +9,7 @@ const FormReview = (props) => {
 
   const preset = {
     rating: 0,
-    review: 'something something',
+    review: '',
   };
 
   const [state, handleChange, setState] = useHandleInputChange(preset);
@@ -52,6 +52,7 @@ const FormReview = (props) => {
                   name="review"
                   value={state.review}
                   onChange={handleChange}
+                  placholder="Write your review..."
                   variant="outlined"
                   multiline
                   rows={8}

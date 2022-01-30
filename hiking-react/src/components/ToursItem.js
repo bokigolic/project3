@@ -11,12 +11,12 @@ const ToursItem = (props) => {
     <>
       <div className="item">
         <div>
-          {item.name}
-          {item.description}
-          {item.date}
-          {item.difficulty}
-          {item.trail_length}
-          {item.max_participants}
+          <div>{item.name}</div>
+          <div>{item.description}</div>
+          <div>{item.date}</div>
+          <div>{item.difficulty}</div>
+          <div>{item.trail_length}</div>
+          <div>{item.max_participants}</div>
         </div>
         <div>
           Average rating: {averageRating}

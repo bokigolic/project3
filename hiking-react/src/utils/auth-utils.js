@@ -11,3 +11,8 @@ export const local_token_get = async () => {
   const token = await window.localStorage.getItem(TOKEN_LOCAL_KEY); // write to local storage
   return token;
 };
+
+export const local_token_delete = async () => {
+  const token = await window.localStorage.removeItem(TOKEN_LOCAL_KEY); // write to local storage
+  return token;
+};
