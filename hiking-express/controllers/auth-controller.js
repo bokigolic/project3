@@ -54,7 +54,7 @@ exports.checkIsLoggedInHelper = async (req) => {
 // CONTROLLERS
 
 exports.registerController = async (req, res, next) => {
-  console.log('registerController');
+  console.log('--- registerController');
   console.log('req.body');
   console.log(req.body);
   console.log(req.body.formData);
@@ -151,7 +151,7 @@ exports.logoutController = async (req, res, next) => {
 
 
 exports.formLoginController = async (req, res, next) => {
-  console.log('formLoginController');
+  console.log('--- formLoginController');
   console.log(req.body.formData);
   try {
     let error = false;

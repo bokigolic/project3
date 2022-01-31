@@ -14,10 +14,7 @@ arouter.route('/formlogin')
   .post(authController.formLoginController);
 arouter.route('/register')
   .post(authController.registerController);
-  /*
-arouter.route('/autologin')
-  .get(authController.autoLoginController);
-  */
+
 
 module.exports = arouter;
 
