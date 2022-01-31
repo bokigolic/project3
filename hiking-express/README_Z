@@ -1,0 +1,38 @@
+# README Z
+
+https://mui.com/components/text-fields/
+https://mui.com/components/pickers/
+
+## DEVELOPING hiking-react REACT APP
+
+### How to install 
+
+1)
+Clone hiking-react from git
+
+2)
+In the folder hiking-react type command
+npm install
+
+### How to start develop server
+
+In the folder hiking-react type command
+npm start
+
+Then open http://localhost:3000 in your web browser
+
+To stop the development server
+press CTRL+C and then type Y (Yes)
+
+### How to make final build
+
+1)
+In the folder hiking-react delete folder "build" if any
+
+2)
+In the folder hiking-react type command
+npm run build
+
+and new fodler build will be created with compiled app in classic HTML and js etc.
+
+That build you should put into public folder on your server.

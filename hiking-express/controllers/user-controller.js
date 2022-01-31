@@ -70,10 +70,5 @@ exports.getMyUserData = async (req, res, next) => {
 exports.getUserList = async (req, res, next) => {
 };
 
-exports.postUserCreate = async (req, res, next) => {
-};
-
-exports.postUserUpdate = async (req, res, next) => {
-};
 
 // module.exports = userControler;

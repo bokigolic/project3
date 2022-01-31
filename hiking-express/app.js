@@ -74,9 +74,9 @@ app.use(cookieParser());
 // You should use the parser middleware before the route declaration part
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // serve everything in public folder as static files
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/test', function (req, res) {
   res.status(200)
     .send('root route: /test  (also try /testnest and /testnest/test)');

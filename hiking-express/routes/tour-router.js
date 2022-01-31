@@ -1,14 +1,25 @@
 const express = require('express');
-const arouter = express.Router();
+const router = express.Router();
 const tourController = require('../controllers/tour-controller.js');
 
 
-arouter.route('/')
+router.route('/')
   .get(() => {
     console.log('he he he')
   });
-arouter.route('/create')
+
+// CRUD (CREATE READ UPDATE DELETE)
+
+router.route('/create')
   .post(tourController.createTour);
+router.route('/get/all')
+  .get(tourController.getToursAll);
+router.route('/update')
+  .post(tourController.updateTour);
+router.route('/delete')
+  .post(tourController.deleteTour);
+router.route('/reviews/get/all')
+  .get(tourController.getTourReviewsAll);
 
 
-module.exports = arouter;
+module.exports = router;
