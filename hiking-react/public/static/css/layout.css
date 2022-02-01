@@ -1,0 +1,233 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-height: 100vh;
+  /* outline: 2px solid red; */
+}
+
+/* FOOTER */
+footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 8rem;
+  padding: 1rem;
+  text-align: center;
+  background-color: rgb(64, 64, 64);
+  color: white;
+
+  /* background-color: lightslategray; */
+}
+footer a {
+  color: white;
+  text-decoration: none;
+}
+footer a:hover {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.footer-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.footer-columns .col {
+  padding: 1rem;
+  min-width: 3rem;
+  text-align: left;
+}
+
+/* MAIN */
+.main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 0px;
+  /* background-color: rosybrown; */
+}
+
+.main .centering-widget {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.main .main-content {
+  position: relative;
+  padding: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* HEADER */
+
+header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 0.5rem;
+  height: 3rem;
+  line-height: 3rem;
+  font-size: 2rem;
+  font-weight: 900;
+  
+  background-color: tomato;
+  color: white;
+}
+header .menu-icon {
+  text-align: center;
+  cursor: pointer;
+}
+header .logo-title {
+  font-size: 1.8rem;
+  padding-left: 2rem;
+  font-weight: 600;
+}
+
+.scrolled .header,
+.scrolled header {
+  z-index: 88;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  /* box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important; */
+  box-shadow: 0 0px 7px 2px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+.fix-header-push {
+  height: 0px;
+  transition: none;
+}
+.scrolled .fix-header-push {
+  height: 40px;
+  transition: none;
+}
+
+/* DRAWER */
+.drawer {
+  z-index: 9999;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  min-height: 100vh;
+  max-width: 0px;
+  overflow: hidden;
+  background-color: black;
+  color: white;
+  flex: 1;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+}
+.drawer-opened .drawer {
+  max-width: 80%;
+}
+.drawer .drawer-close {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  background-color: white;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 2rem;
+  color: black;
+  text-align: center;
+  line-height: 1.85rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.drawer .drawer-close:hover {
+  background-color: tomato;
+  color: white;
+  cursor: pointer;
+}
+.drawer .pad {
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.drawer nav {
+}
+.drawer nav .option {
+  text-transform: uppercase;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px 8px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 0.5rem;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0.125rem;
+  padding-right: 0.5rem;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+  border-radius: 0.4rem;
+  border-radius: 2rem;
+}
+.drawer nav .option:hover,
+.drawer nav .option.active {
+  cursor: pointer;
+  background-color: tomato;
+  padding-left: 0.5rem;
+  padding-right: 0.125rem;
+}
+
+/* SCROLLTO TOP */
+a.btn-scroll-to-top {
+  z-index: 55;
+  position: fixed;
+  /* bottom: 5px; */
+  right: 1rem;
+  display: block;
+  height: 3rem;
+  width: 3rem;
+  line-height: 40px;
+  font-size: 1.5rem;
+  text-align: center;
+  /*
+  color: #4bbcd7;
+  background-color: rgba(75, 188, 215, 0.3);
+  border: 2px solid #4bbcd7;
+  border-color: #4bbcd7;
+  */
+  color: tomato;
+  background-color: rgba(255, 99, 71, 0.3);
+  border: 2px solid rgba(255, 99, 71, 0.6);
+  border-color: tomato;
+  border-radius: 50%;
+  transition: all 0.1s ease-out;
+}
+a.btn-scroll-to-top {
+}
+a.btn-scroll-to-top:hover {
+  color: white;
+  background-color: tomato;
+}
+a.btn-scroll-to-top {
+  /* display: none; */
+  bottom: -3rem;
+}
+.scrolled-bellow-sidebar a.btn-scroll-to-top {
+  bottom: 0.4rem;
+}

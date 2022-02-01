@@ -1,59 +1,47 @@
-import { useDispatch } from "react-redux";
-import { actionAuthLogout, actionAuthGetMyUserData } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { actionAuthLogout, actionAuthGetMyUserData, actionDrawerOpen } from "../redux/actions";
 import PageRouter from "./PageRouter";
 import FormLogin from "./FormLogin";
 import FormRegister from "./FormRegister";
 import FormReview from "./FormReview";
 import FormTour from "./FormTour";
-import { Button } from "@mui/material";
+import Drawer from "./DrawerCustom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 
 const Website = (props) => {
   const dispatch = useDispatch();
+  const drawerOpened = useSelector(state => state.drawerOpened);
+  const isLoggedIn = useSelector(state => state.isLoggedIn);
+  const myUserName = useSelector(state => state.myUserName);
 
-  const handleCheck = () => {
-    console.log('click check');
-    dispatch(actionAuthGetMyUserData());
+  let jsxUserMessage = null;
+  if (isLoggedIn && myUserName) {
+    jsxUserMessage = (
+      <div>You are logged in! Username: <b>{myUserName}</b></div>
+    );
+  }
 
-  };
-
-  const handleLogout = () => {
-    console.log('click logout');
-    dispatch(actionAuthLogout());
-
+  const handleClickHamburger = () => {
+    dispatch(actionDrawerOpen());
   };
 
   return (
     <>
-      <div className={"wrapper"}>
+      <div className={"wrapper" + (drawerOpened ? " drawer-opened" : "")}>
+        <Drawer />
         <header>
-          <h1>American Hiking Club</h1>
-          <br />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleCheck}
-          >Check is logged in</Button>
-          <br />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleLogout}
-          >Logout</Button>
+          <div className="menu-icon" onClick={handleClickHamburger}><FontAwesomeIcon icon={faBars} /></div>
+          <div className="logo">American Hiking Club</div>
         </header>
         <div className="page-body">
+          {jsxUserMessage}
           <PageRouter />
         </div>
-        <h2>forms...</h2>
-        <FormTour />
-        <FormReview />
-        <FormLogin />
-        <FormRegister />
       </div>
     </>
   );
-}
+};
 
 export default Website;

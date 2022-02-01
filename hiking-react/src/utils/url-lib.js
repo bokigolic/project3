@@ -71,4 +71,12 @@ apiLib.postUserCreate = () => {
 };
 
 
+// TOURS 
+
+apiLib.postTourCreate = () => {
+  let url = apiLib.apiPrefix() + '/api/v1/tour/create'; // POST
+  return url;
+};
+
+
 export { urlLib, apiLib };

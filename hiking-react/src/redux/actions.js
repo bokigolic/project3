@@ -1,10 +1,11 @@
 
 import ajax from "../utils/ajax-adapter";
 import { ajax_fetch } from "../utils/ajax-fetch";
-import { local_token_get, local_token_set } from "../utils/auth-utils";
+import { local_token_delete, local_token_get, local_token_set } from "../utils/auth-utils";
 import config from "../utils/config";
 
 const AUTH_LOGOUT_FETCHING = 'AUTH_LOGOUT_FETCHING';
+const AUTH_LOGOUT = 'AUTH_LOGOUT';
 const AUTH_REGISTER_FETCHING = 'AUTH_REGISTER_FETCHING';
 const AUTH_REGISTER_SUCCESS = 'AUTH_REGISTER_SUCCESS';
 const AUTH_REGISTER_FAIL = 'AUTH_REGISTER_FAIL';
@@ -13,18 +14,33 @@ const AUTH_FORMLOGIN_SUCCESS = 'AUTH_FORMLOGIN_SUCCESS';
 const AUTH_FORMLOGIN_FAIL = 'AUTH_FORMLOGIN_FAIL';
 const AUTH_GET_MY_USER_DATA_FETCHING = 'AUTH_GET_MY_USER_DATA_FETCHING';
 const AUTH_GET_MY_USER_DATA_SUCCESS = 'AUTH_GET_MY_USER_DATA_SUCCESS';
+const TOUR_CREATE_FETCHING = 'TOUR_CREATE_FETCHING';
+const TOUR_CREATE_SUCCESS = 'TOUR_CREATE_SUCCESS';
+const TOUR_CREATE_FAIL = 'TOUR_CREATE_FAIL';
 
 
-export const errCatched = (error) => {
+const errCatched = (error) => {
   console.log('errCatched');
   console.error(error);
 }
 
 
-export const actionRouteSet = (route_key) => {
+export const actionRouteSet = (route) => {
   return {
     type: 'ROUTE_SET',
-    payload: route_key
+    payload: route
+  }
+};
+
+export const actionDrawerOpen = () => {
+  return {
+    type: 'DRAWER_OPEN'
+  }
+};
+
+export const actionDrawerClose = () => {
+  return {
+    type: 'DRAWER_CLOSE'
   }
 };
 
@@ -49,6 +65,29 @@ export const actionAuthLogout = () => {
     dispatch({
       type: AUTH_LOGOUT_FETCHING
     });
+
+    // korak 2 - fetchujemo podatke
+    ajax.postAuthLogout()
+      .then(response => ajax_fetch.response_json_smart(response))
+      .then((response) => {
+        if (response && response.is_success_response === true) {
+          // BACKEND LOGOUT FINISHED
+          // now we do frontend logout procedure
+          const res_payload = response.payload;
+          console.log(res_payload);
+          // delete token
+          local_token_delete()
+            .then(() => {
+              // tell redux we logged out
+              dispatch({
+                type: AUTH_LOGOUT,
+                payload: res_payload
+              });
+            })
+
+        }
+      })
+
   };
 };
 
@@ -146,10 +185,12 @@ export const actionAuthFormLogin = (entbox) => {
                     // console.log(response);
                     const res_payload = response.payload;
                     console.log(res_payload);
-                    dispatch({
-                      type: AUTH_GET_MY_USER_DATA_SUCCESS,
-                      payload: res_payload
-                    });
+                    if (res_payload && res_payload.user && res_payload.user.username) {
+                      dispatch({
+                        type: AUTH_GET_MY_USER_DATA_SUCCESS,
+                        payload: res_payload
+                      });
+                    }
                   }
                 })
             })
@@ -189,13 +230,59 @@ export const actionAuthGetMyUserData = () => {
               console.log(response);
               const res_payload = response.payload;
               console.log(res_payload);
-              dispatch({
-                type: AUTH_GET_MY_USER_DATA_SUCCESS,
-                payload: res_payload
-              });
+              if (res_payload && res_payload.user && res_payload.user.username) {
+                dispatch({
+                  type: AUTH_GET_MY_USER_DATA_SUCCESS,
+                  payload: res_payload
+                });
+              }
             }
           })
+
       })
+
   };
 };
 
+
+// TOUR ACTIONS
+
+export const actionTourCreate = (entbox) => {
+  // THUNK
+  return (dispatch) => {
+    // korak 1 - dispetchujemo akciju uz prikaz spinera
+    dispatch({
+      type: TOUR_CREATE_FETCHING
+    });
+
+    // korak 2 - fetchujemo podatke
+    ajax.postTourCreate(entbox)
+      .then(response => {
+        console.log(response);
+        return response;
+      })
+      .then(response => ajax_fetch.response_json_smart(response))
+      .then((response) => {
+        // korak 3 - zavrseno fetcovanje
+        // if (response.success === true) {
+        console.log(response);
+        if (response && response.is_success_response === true) {
+          // console.log(response);
+          const res_payload = response.payload;
+          console.log(res_payload);
+          dispatch({
+            type: TOUR_CREATE_SUCCESS,
+            payload: res_payload
+          });
+
+
+          //
+        } else {
+          dispatch({ type: TOUR_CREATE_FAIL });
+          console.log(response);
+        }
+      })
+      .catch(errCatched)
+
+  }
+};
