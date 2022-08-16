@@ -7,7 +7,7 @@ For future we would like to add functions like comment, ratings, users can join 
 
 ## Deployment
 
-You can see a deployed version [here](https://american-hiking-club.herokuapp.com/)
+You can see a deployed version [here](https://hiking-5.herokuapp.com/)
 
 
 
